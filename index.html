@@ -199,7 +199,7 @@
                             <p class="text-[10px] text-gray-600 mt-1">Jadwal resmi dikunci setelah melakukan pembayaran <b>DP 50%</b> ke Sea Bank: 901961117013 a/n Mila.</p>
                         </div>
                         
-                        <button onclick="kirimWhatsApp()" class="w-full beige-btn text-white py-3 rounded-xl font-bold shadow-md mt-2">Kirim Pesanan & DP ke WhatsApp</button>
+                        <button id="btnKirim" onclick="kirimWhatsApp(this)" class="w-full beige-btn text-white py-3 rounded-xl font-bold shadow-md mt-2">Kirim Pesanan & DP ke WhatsApp</button>
                     </div>`;
             } else if (page === 'galeri') {
                 content.innerHTML = `
@@ -243,7 +243,7 @@
             }
         }
 
-        function kirimWhatsApp() {
+        function kirimWhatsApp(button) {
             const nama = document.getElementById('namaKlien').value;
             const whatsapp = document.getElementById('waKlien').value;
             const paket = document.getElementById('pilihPaket').value;
@@ -258,17 +258,35 @@
                 return;
             }
 
+            // Kunci tombol agar tidak bisa diklik dua kali (mencegah data double)
+            button.disabled = true;
+            button.style.opacity = "0.6";
+            button.innerText = "Sedang Mengirim...";
+
             // URL Web App Google Apps Script Anda
             const scriptURL = "https://script.google.com/macros/s/AKfycbx6kEnR5eHsbvnBl5vUmmHl99RVhYAz4wO8AnZrOjJNQAPSDwJkiOyyMxQu4t8CWZc/exec";
 
             // Kirim data ke Spreadsheet secara otomatis
             const url = `${scriptURL}?nama=${encodeURIComponent(nama)}&whatsapp=${encodeURIComponent(whatsapp)}&paket=${encodeURIComponent(paket)}&layanan=${encodeURIComponent(lokasi)}&softlens=${encodeURIComponent(softlens)}&tglAcara=${encodeURIComponent(tgl)}&alamat=${encodeURIComponent(alamat)}`;
-            fetch(url);
-
-            // Buka WhatsApp dengan format pesan rincian pemesanan, rekening Sea Bank, dan Perhatian
-            const pesan = `Halo Kak Mila, saya ingin booking makeup dengan rincian berikut:%0A%0A*Nama:* ${nama}%0A*No. WhatsApp:* ${whatsapp}%0A*Paket:* ${paket}%0A*Layanan:* ${lokasi}%0A*Softlens:* ${softlens}%0A*Tanggal:* ${tgl}%0A*Alamat/Link Maps:* ${alamat}%0A%0A*INFORMASI PEMBAYARAN DP 50%:*%0AUntuk mengunci jadwal, silakan melakukan transfer DP 50% ke rekening berikut:%0A🏦 *Sea Bank:* 901961117013%0A🏷️ *Atas Nama:* Mila%0A%0A*PERHATIAN:*%0A- Hari H wajib nomor HP aktif.%0A- Kirim lokasi lewat aplikasi maps.%0A- Sebelum MUA datang, client wajib sudah ready makeup/sudah mandi.%0A- Jika tiba-tiba dicancel, DP akan hangus.%0A%0ASetelah transfer, mohon kirimkan bukti pembayarannya di sini ya Kak. Terima kasih!`;
             
-            window.open(`https://wa.me/${noWA}?text=${pesan}`, '_blank');
+            fetch(url).then(() => {
+                // Buka WhatsApp dengan format pesan rincian pemesanan, rekening Sea Bank, dan Perhatian
+                const pesan = `Halo Kak Mila, saya ingin booking makeup dengan rincian berikut:%0A%0A*Nama:* ${nama}%0A*No. WhatsApp:* ${whatsapp}%0A*Paket:* ${paket}%0A*Layanan:* ${lokasi}%0A*Softlens:* ${softlens}%0A*Tanggal:* ${tgl}%0A*Alamat/Link Maps:* ${alamat}%0A%0A*INFORMASI PEMBAYARAN DP 50%:*%0AUntuk mengunci jadwal, silakan melakukan transfer DP 50% ke rekening berikut:%0A🏦 *Sea Bank:* 901961117013%0A🏷️ *Atas Nama:* Mila%0A%0A*PERHATIAN:*%0A- Hari H wajib nomor HP aktif.%0A- Kirim lokasi lewat aplikasi maps.%0A- Sebelum MUA datang, client wajib sudah ready makeup/sudah mandi.%0A- Jika tiba-tiba dicancel, DP akan hangus.%0A%0ASetelah transfer, mohon kirimkan bukti pembayarannya di sini ya Kak. Terima kasih!`;
+                
+                window.open(`https://wa.me/${noWA}?text=${pesan}`, '_blank');
+                
+                // Kembalikan tombol seperti semula setelah 3 detik
+                setTimeout(() => {
+                    button.disabled = false;
+                    button.style.opacity = "1";
+                    button.innerText = "Kirim Pesanan & DP ke WhatsApp";
+                }, 3000);
+            }).catch(error => {
+                console.error('Error!', error);
+                button.disabled = false;
+                button.style.opacity = "1";
+                button.innerText = "Kirim Pesanan & DP ke WhatsApp";
+            });
         }
 
         loadPage('home');
