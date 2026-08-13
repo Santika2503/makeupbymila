@@ -201,22 +201,18 @@
                 content.innerHTML = `
                     <h2 class="text-xl font-bold text-beige-dark mb-4 font-brand">Portofolio Makeupbymila</h2>
                     <div class="grid grid-cols-2 gap-3">
-                        <!-- Portofolio Make up Lamaran -->
                         <div class="h-48 bg-cream-card rounded-2xl border border-beige overflow-hidden shadow-sm flex flex-col">
                             <img src="https://lh3.googleusercontent.com/d/1P1hsXzXF2BL4UFGuy-AsKTWVcpDw4kdq" alt="Makeup Lamaran" class="w-full h-36 object-cover" onerror="this.onerror=null; this.src='https://via.placeholder.com/150';">
                             <div class="p-2 text-center text-xs font-semibold text-beige-dark font-serif">Makeup Lamaran</div>
                         </div>
-                        <!-- Portofolio Make up Akad -->
                         <div class="h-48 bg-cream-card rounded-2xl border border-beige overflow-hidden shadow-sm flex flex-col">
                             <img src="https://lh3.googleusercontent.com/d/1kiFL08D9QCKIX51jAMiBV84Z7Q-7RmhG" alt="Makeup Akad" class="w-full h-36 object-cover" onerror="this.onerror=null; this.src='https://via.placeholder.com/150';">
                             <div class="p-2 text-center text-xs font-semibold text-beige-dark font-serif">Makeup Akad</div>
                         </div>
-                        <!-- Portofolio Make up Wedding -->
                         <div class="h-48 bg-cream-card rounded-2xl border border-beige overflow-hidden shadow-sm flex flex-col">
                             <img src="https://lh3.googleusercontent.com/d/1I4finfpINtf4Ca5HEUt2J-5oSvAmfFH7" alt="Makeup Wedding" class="w-full h-36 object-cover" onerror="this.onerror=null; this.src='https://via.placeholder.com/150';">
                             <div class="p-2 text-center text-xs font-semibold text-beige-dark font-serif">Makeup Wedding</div>
                         </div>
-                        <!-- Portofolio Make up Wisuda -->
                         <div class="h-48 bg-cream-card rounded-2xl border border-beige overflow-hidden shadow-sm flex flex-col">
                             <img src="https://lh3.googleusercontent.com/d/1Pg_rjizwLxZ4FSrpu-kJSYroLx1Se0UR" alt="Makeup Wisuda" class="w-full h-36 object-cover" onerror="this.onerror=null; this.src='https://via.placeholder.com/150';">
                             <div class="p-2 text-center text-xs font-semibold text-beige-dark font-serif">Makeup Wisuda</div>
@@ -258,30 +254,12 @@
                 return;
             }
 
-            // URL Web App Google Apps Script Anda yang sudah terhubung ke sheet "Data Booking Make Up"
-            const scriptURL = "https://script.google.com/macros/s/AKfycbz84uUR0SFeyzXPCGazZlfK6RE2Z_p5SvrHtv7N-a3Psz0WzYVuhIf5ZgMY1b4y4GTU/exec";
+            // URL Web App Google Apps Script (Metode GET)
+            const scriptURL = "https://script.google.com/macros/s/AKfycbyUPN2zTyOgsfgA1YPi9YkhFqOLRP1RGPA9NacBl9iC2mkSX_8UcGdeVqAvsKTpvHKj/exec";
 
-            // Kirim data secara otomatis ke Google Spreadsheet
-            const formData = {
-                nama: nama,
-                whatsapp: whatsapp,
-                paket: paket,
-                layanan: lokasi,
-                softlens: softlens,
-                tglAcara: tgl,
-                alamat: alamat
-            };
-
-            fetch(scriptURL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
-            }).then(() => {
-                console.log('Data berhasil dikirim ke Spreadsheet');
-            }).catch(error => {
-                console.error('Error!', error.message);
-            });
+            // Kirim data secara otomatis ke Google Spreadsheet menggunakan GET
+            const url = `${scriptURL}?nama=${encodeURIComponent(nama)}&whatsapp=${encodeURIComponent(whatsapp)}&paket=${encodeURIComponent(paket)}&layanan=${encodeURIComponent(lokasi)}&softlens=${encodeURIComponent(softlens)}&tglAcara=${encodeURIComponent(tgl)}&alamat=${encodeURIComponent(alamat)}`;
+            fetch(url);
 
             // Buka WhatsApp untuk konfirmasi pesanan
             const pesan = `Halo Kak Mila, saya ingin booking makeup.%0A%0A*Nama:* ${nama}%0A*No. WhatsApp:* ${whatsapp}%0A*Paket:* ${paket}%0A*Layanan:* ${lokasi}%0A*Softlens:* ${softlens}%0A*Tanggal:* ${tgl}%0A*Alamat/Catatan:* ${alamat}%0A%0AMohon konfirmasinya ya Kak, terima kasih!`;
