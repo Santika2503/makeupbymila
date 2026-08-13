@@ -199,7 +199,7 @@
                     </div>`;
             } else if (page === 'galeri') {
                 content.innerHTML = `
-                    <h2 class="text-xl font-bold text-beige-dark mb-2 font-brand">Portofolio Makeupbymila</h2>
+                    <h2 class="text-xl font-bold text-beige-dark mb-4 font-brand">Portofolio Makeupbymila</h2>
                     <div class="grid grid-cols-2 gap-3">
                         <!-- Portofolio Make up Lamaran -->
                         <div class="h-48 bg-cream-card rounded-2xl border border-beige overflow-hidden shadow-sm flex flex-col">
@@ -258,6 +258,32 @@
                 return;
             }
 
+            // URL Web App Google Apps Script Anda yang sudah terhubung ke sheet "Data Booking Make Up"
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbz5IsPhiR5oJcjEt1DBeqMcbigk3u6PYeIn4OWmfG1KQqJLWE6masI019CthFfZnyh4/exec';
+
+            // Kirim data secara otomatis ke Google Spreadsheet
+            const formData = {
+                nama: nama,
+                whatsapp: whatsapp,
+                paket: paket,
+                layanan: lokasi,
+                softlens: softlens,
+                tglAcara: tgl,
+                alamat: alamat
+            };
+
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            }).then(() => {
+                console.log('Data berhasil dikirim ke Spreadsheet');
+            }).catch(error => {
+                console.error('Error!', error.message);
+            });
+
+            // Buka WhatsApp untuk konfirmasi pesanan
             const pesan = `Halo Kak Mila, saya ingin booking makeup.%0A%0A*Nama:* ${nama}%0A*No. WhatsApp:* ${whatsapp}%0A*Paket:* ${paket}%0A*Layanan:* ${lokasi}%0A*Softlens:* ${softlens}%0A*Tanggal:* ${tgl}%0A*Alamat/Catatan:* ${alamat}%0A%0AMohon konfirmasinya ya Kak, terima kasih!`;
             window.open(`https://wa.me/${noWA}?text=${pesan}`, '_blank');
         }
