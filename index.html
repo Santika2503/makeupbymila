@@ -56,7 +56,7 @@
             <div class="mt-3">
                 <a href="https://www.instagram.com/makeupbymila._plg" target="_blank" class="inline-flex items-center space-x-1.5 text-xs bg-white text-beige-dark border border-beige px-3 py-1.5 rounded-full shadow-sm hover:bg-[#bfa181] hover:text-white transition-all">
                     <i class="fa-brands fa-instagram text-pink-500"></i>
-                    <span class="font-semibold">makeupbymila._plg</span>
+                    <span class="font-semibold">@makeupbymila._plg</span>
                 </a>
             </div>
         </header>
@@ -73,7 +73,7 @@
             </p>
             <a href="https://www.instagram.com/santikatantri" target="_blank" class="inline-flex items-center space-x-1.5 text-xs text-beige-primary hover:underline font-semibold">
                 <i class="fa-brands fa-instagram text-pink-500 text-sm"></i>
-                <span>santikatantri</span>
+                <span>@santikatantri</span>
             </a>
         </div>
 
@@ -159,6 +159,10 @@
                             <input type="text" id="namaKlien" placeholder="Contoh: Sinta Maharani" class="w-full p-3 border border-beige rounded-xl text-sm focus:outline-none focus:border-[#bfa181] bg-white">
                         </div>
                         <div>
+                            <label class="block text-xs font-bold text-beige-dark mb-1">Nomor WhatsApp / HP</label>
+                            <input type="tel" id="waKlien" placeholder="Contoh: 081234567890" class="w-full p-3 border border-beige rounded-xl text-sm focus:outline-none focus:border-[#bfa181] bg-white">
+                        </div>
+                        <div>
                             <label class="block text-xs font-bold text-beige-dark mb-1">Pilih Paket</label>
                             <select id="pilihPaket" class="w-full p-3 border border-beige rounded-xl text-sm focus:outline-none focus:border-[#bfa181] bg-white">
                                 <option value="Reguler (100k-130k)">Paket Reguler (100k - 130k)</option>
@@ -195,7 +199,7 @@
                     </div>`;
             } else if (page === 'galeri') {
                 content.innerHTML = `
-                    <h2 class="text-xl font-bold text-beige-dark mb-4 font-brand">Portofolio Makeupbymila</h2>
+                    <h2 class="text-xl font-bold text-beige-dark mb-2 font-brand">Portofolio Makeupbymila</h2>
                     <div class="grid grid-cols-2 gap-3">
                         <!-- Portofolio Make up Lamaran -->
                         <div class="h-48 bg-cream-card rounded-2xl border border-beige overflow-hidden shadow-sm flex flex-col">
@@ -211,6 +215,11 @@
                         <div class="h-48 bg-cream-card rounded-2xl border border-beige overflow-hidden shadow-sm flex flex-col">
                             <img src="https://lh3.googleusercontent.com/d/1I4finfpINtf4Ca5HEUt2J-5oSvAmfFH7" alt="Makeup Wedding" class="w-full h-36 object-cover" onerror="this.onerror=null; this.src='https://via.placeholder.com/150';">
                             <div class="p-2 text-center text-xs font-semibold text-beige-dark font-serif">Makeup Wedding</div>
+                        </div>
+                        <!-- Portofolio Make up Wisuda -->
+                        <div class="h-48 bg-cream-card rounded-2xl border border-beige overflow-hidden shadow-sm flex flex-col">
+                            <img src="https://lh3.googleusercontent.com/d/1Pg_rjizwLxZ4FSrpu-kJSYroLx1Se0UR" alt="Makeup Wisuda" class="w-full h-36 object-cover" onerror="this.onerror=null; this.src='https://via.placeholder.com/150';">
+                            <div class="p-2 text-center text-xs font-semibold text-beige-dark font-serif">Makeup Wisuda</div>
                         </div>
                     </div>`;
             } else if (page === 'produk') {
@@ -236,6 +245,7 @@
 
         function kirimWhatsApp() {
             const nama = document.getElementById('namaKlien').value;
+            const whatsapp = document.getElementById('waKlien').value;
             const paket = document.getElementById('pilihPaket').value;
             const lokasi = document.getElementById('pilihLokasi').value;
             const softlens = document.getElementById('pilihSoftlens').value;
@@ -243,12 +253,12 @@
             const alamat = document.getElementById('alamatKlien').value;
             const noWA = "6289609186921";
 
-            if(!nama || !tgl) {
-                alert("Mohon isi nama dan tanggal acara terlebih dahulu!");
+            if(!nama || !whatsapp || !tgl) {
+                alert("Mohon isi Nama, No. WhatsApp, dan Tanggal Acara terlebih dahulu!");
                 return;
             }
 
-            const pesan = `Halo Kak Mila, saya ingin booking makeup.%0A%0A*Nama:* ${nama}%0A*Paket:* ${paket}%0A*Layanan:* ${lokasi}%0A*Softlens:* ${softlens}%0A*Tanggal:* ${tgl}%0A*Alamat/Catatan:* ${alamat}%0A%0AMohon konfirmasinya ya Kak, terima kasih!`;
+            const pesan = `Halo Kak Mila, saya ingin booking makeup.%0A%0A*Nama:* ${nama}%0A*No. WhatsApp:* ${whatsapp}%0A*Paket:* ${paket}%0A*Layanan:* ${lokasi}%0A*Softlens:* ${softlens}%0A*Tanggal:* ${tgl}%0A*Alamat/Catatan:* ${alamat}%0A%0AMohon konfirmasinya ya Kak, terima kasih!`;
             window.open(`https://wa.me/${noWA}?text=${pesan}`, '_blank');
         }
 
