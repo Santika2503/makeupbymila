@@ -264,7 +264,8 @@
             button.innerText = "Sedang Mengirim...";
 
             // URL Web App Google Apps Script Anda
-            const scriptURL = "https://script.google.com/macros/s/AKfycbx6kEnR5eHsbvnBl5vUmmHl99RVhYAz4wO8AnZrOjJNQAPSDwJkiOyyMxQu4t8CWZc/exec";
+            const scriptURL = "https://script.google.com/macros/s/AKfycbwICwriVEgZs703IWuPByUgX5QaRH2bX5cN56Lm9HbTGV7MRpYFo_HiWCgYN4cT_cl4/exec";
+;
 
             // Kirim data ke Spreadsheet secara otomatis
             const url = `${scriptURL}?nama=${encodeURIComponent(nama)}&whatsapp=${encodeURIComponent(whatsapp)}&paket=${encodeURIComponent(paket)}&layanan=${encodeURIComponent(lokasi)}&softlens=${encodeURIComponent(softlens)}&tglAcara=${encodeURIComponent(tgl)}&alamat=${encodeURIComponent(alamat)}`;
